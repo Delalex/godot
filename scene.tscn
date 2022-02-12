@@ -1,0 +1,143 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://player/amogus.glb" type="PackedScene" id=1]
+[ext_resource path="res://gun_laser/gun_laser_gltf.glb" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/player.gd" type="Script" id=4]
+[ext_resource path="res://Scripts/gun.gd" type="Script" id=5]
+[ext_resource path="res://beam/beam_gltf.glb" type="PackedScene" id=6]
+[ext_resource path="res://Scripts/beam.gd" type="Script" id=7]
+[ext_resource path="res://Scripts/main_script.gd" type="Script" id=8]
+[ext_resource path="res://tree_1/tree_1_gltf/tree_1_gltf.glb" type="PackedScene" id=9]
+[ext_resource path="res://tree_2/tree_2_gltf/tree_2_gltf.glb" type="PackedScene" id=10]
+[ext_resource path="res://desert_ground/desert_ground_dltf.glb" type="PackedScene" id=11]
+
+[sub_resource type="BoxShape" id=1]
+
+[sub_resource type="BoxShape" id=2]
+
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 1, 0.412208, 0.153068 )
+
+[sub_resource type="BoxShape" id=4]
+extents = Vector3( 0.354653, 1.7646, 0.395839 )
+
+[sub_resource type="BoxShape" id=5]
+extents = Vector3( 1, 0.789712, 1 )
+
+[node name="Main" type="Spatial"]
+script = ExtResource( 8 )
+
+[node name="ground" type="StaticBody" parent="."]
+transform = Transform( 50, 0, 0, 0, 1, 0, 0, 0, 50, 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="ground"]
+transform = Transform( 2, 0, 0, 0, 0.15, 0, 0, 0, 2, 0, 0.243, 0 )
+shape = SubResource( 1 )
+
+[node name="desert_ground_dltf" parent="ground" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.49012e-08, 0 )
+
+[node name="player" type="KinematicBody" parent="."]
+script = ExtResource( 4 )
+
+[node name="Camera" type="Camera" parent="player"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 3.03391, -0.0919055 )
+
+[node name="player_collider" type="CollisionShape" parent="player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.624, 0, 2.20409, -0.400126 )
+shape = SubResource( 2 )
+
+[node name="player_texture" parent="player/player_collider" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1.60256, -1.19209e-07, -1.04443, 0.641227 )
+
+[node name="gun_collider" type="CollisionShape" parent="player"]
+transform = Transform( 0.19, 0, 0, 0, 0.462, 0, 0, 0, 1, -1.04364, 2.37034, 0.877185 )
+shape = SubResource( 3 )
+script = ExtResource( 5 )
+
+[node name="gun_texture" parent="player/gun_collider" instance=ExtResource( 2 )]
+transform = Transform( -2.00594e-07, 0, -5.263, 0, 2.165, 0, 0.711, 0, -1.48485e-06, -0.0860868, -0.297393, 0.506875 )
+
+[node name="Muzzle" type="Position3D" parent="player/gun_collider"]
+transform = Transform( 0.255, 0, 0, 0, 0.254, 0, 0, 0, 0.255, 0, 0.78213, 1.21051 )
+
+[node name="beam_type" type="KinematicBody" parent="."]
+transform = Transform( -1, -7.64274e-15, 8.74228e-08, 0, 1, 8.74228e-08, -8.74228e-08, 8.74228e-08, -1, -1.093, 2.01496, 1.38689 )
+script = ExtResource( 7 )
+
+[node name="beam_texture" parent="beam_type" instance=ExtResource( 6 )]
+transform = Transform( -1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, -0.000711441, -0.229185, -0.44764 )
+
+[node name="trees_1" type="Node" parent="."]
+
+[node name="tree" type="StaticBody" parent="trees_1"]
+transform = Transform( 3, 0, 0, 0, 17, 0, 0, 0, 3, -3.67841, 3.84224, 10.9383 )
+
+[node name="texture" parent="trees_1/tree" instance=ExtResource( 9 )]
+transform = Transform( 0.666667, 0, 0, 0, 0.117647, 0, 0, 0, 0.666667, 0.0639327, -0.202894, 0 )
+
+[node name="collider" type="CollisionShape" parent="trees_1/tree"]
+transform = Transform( 0.666667, 0, 0, 0, 0.117647, 0, 0, 0, 0.666667, -0.0025847, 0.00434934, -0.0391846 )
+shape = SubResource( 4 )
+
+[node name="tree2" type="StaticBody" parent="trees_1"]
+transform = Transform( 2.97282, 0, -0.402893, 0, 17, 0, 0.402893, 0, 2.97282, -13.7052, 3.84224, 18.8933 )
+
+[node name="texture" parent="trees_1/tree2" instance=ExtResource( 9 )]
+transform = Transform( 0.666667, 0, 0, 0, 0.117647, 0, 0, 0, 0.666667, 0.0639327, -0.202894, 0 )
+
+[node name="collider" type="CollisionShape" parent="trees_1/tree2"]
+transform = Transform( 0.666667, 0, 0, 0, 0.117647, 0, 0, 0, 0.666667, -0.0025847, 0.00434934, -0.0391846 )
+shape = SubResource( 4 )
+
+[node name="tree4" type="StaticBody" parent="trees_1"]
+transform = Transform( 2.97282, 0, -0.402893, 0, 17, 0, 0.402893, 0, 2.97282, -13.7052, 3.84224, -12.1605 )
+
+[node name="texture" parent="trees_1/tree4" instance=ExtResource( 9 )]
+transform = Transform( 0.666667, 0, 0, 0, 0.117647, 0, 0, 0, 0.666667, 0.0639327, -0.202894, 0 )
+
+[node name="collider" type="CollisionShape" parent="trees_1/tree4"]
+transform = Transform( 0.666667, 0, 0, 0, 0.117647, 0, 0, 0, 0.666667, -0.0025847, 0.00434934, -0.0391846 )
+shape = SubResource( 4 )
+
+[node name="tree5" type="StaticBody" parent="trees_1"]
+transform = Transform( 2.97282, 0, -0.402893, 0, 17, 0, 0.402893, 0, 2.97282, 11.8694, 3.84224, -12.1605 )
+
+[node name="texture" parent="trees_1/tree5" instance=ExtResource( 9 )]
+transform = Transform( 0.666667, 0, 0, 0, 0.117647, 0, 0, 0, 0.666667, 0.0639327, -0.202894, 0 )
+
+[node name="collider" type="CollisionShape" parent="trees_1/tree5"]
+transform = Transform( 0.666667, 0, 0, 0, 0.117647, 0, 0, 0, 0.666667, -0.0025847, 0.00434934, -0.0391846 )
+shape = SubResource( 4 )
+
+[node name="tree3" type="StaticBody" parent="trees_1"]
+transform = Transform( 2.97282, 0, -0.402893, 0, 17, 0, 0.402893, 0, 2.97282, 21.5001, 3.84224, 18.8933 )
+
+[node name="texture" parent="trees_1/tree3" instance=ExtResource( 9 )]
+transform = Transform( 0.666667, 0, 0, 0, 0.117647, 0, 0, 0, 0.666667, 0.0639327, -0.202894, 0 )
+
+[node name="collider" type="CollisionShape" parent="trees_1/tree3"]
+transform = Transform( 0.666667, 0, 0, 0, 0.117647, 0, 0, 0, 0.666667, -0.0025847, 0.00434934, -0.0391846 )
+shape = SubResource( 4 )
+
+[node name="trees_2" type="Node" parent="."]
+
+[node name="tree" type="StaticBody" parent="trees_2"]
+transform = Transform( 5, 0, 0, 0, 22.049, 0, 0, 0, 5, -4.10133, 4.86152, 25.8082 )
+
+[node name="texture" parent="trees_2/tree" instance=ExtResource( 10 )]
+transform = Transform( 0.6, 0, 0, 0, 0.136061, 0, 0, 0, 0.6, 0.0545192, -0.205618, 0.0414433 )
+
+[node name="CollisionShape" type="CollisionShape" parent="trees_2/tree"]
+transform = Transform( 0.192, 0, 0, 0, 0.282, 0, 0, 0, 0.192, 0, 0.0189144, 0 )
+shape = SubResource( 5 )
+
+[node name="tree2" type="StaticBody" parent="trees_2"]
+transform = Transform( 5, 0, 0, 0, 22.049, 0, 0, 0, 5, -20.9008, 4.86152, 5.8912 )
+
+[node name="texture" parent="trees_2/tree2" instance=ExtResource( 10 )]
+transform = Transform( 0.6, 0, 0, 0, 0.136061, 0, 0, 0, 0.6, 0.0545192, -0.205618, 0.0414433 )
+
+[node name="CollisionShape" type="CollisionShape" parent="trees_2/tree2"]
+transform = Transform( 0.192, 0, 0, 0, 0.282, 0, 0, 0, 0.192, 0, 0.0189144, 0 )
+shape = SubResource( 5 )
